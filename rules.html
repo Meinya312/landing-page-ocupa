@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rules & Policies - Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #001f2b;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER === */
+    .header {
+      background-color: #001f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header .logo {
+      width: 80px;
+      height: 80px;
+    }
+
+    .header .title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.6rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky; /* ← Makes it stick */
+      top: 0; /* ← Sticks at top */
+      z-index: 100; /* ← Stays above other content */
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === POLICIES MAIN SECTION === */
+    .policies-main {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      display: flex;
+      gap: 2.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .policies-left {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .policies-left img {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .policies-left img:hover {
+      transform: scale(1.02);
+    }
+
+    .policies-right {
+      flex: 1;
+      color: white;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      background: rgba(0, 31, 43, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .policies-right p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: 1.6rem;
+      max-width: 500px;
+    }
+
+    .policy-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      min-width: 220px;
+      padding: 0.8rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: background 0.3s;
+    }
+
+    .policy-item:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .policy-item img {
+      width: 28px;
+      height: 28px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .policy-item p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin: 0;
+      color: white;
+    }
+
+    /* === RED TAPE IMAGE SECTION === */
+    .red-tape-section {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    .red-tape-section img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      transition: transform 0.3s;
+    }
+
+    .red-tape-section img:hover {
+      transform: scale(1.02);
+    }
+
+    /* === FIXER SECTION === */
+    .fixer-section {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      display: flex;
+      gap: 2.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .fixer-left {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fixer-left img {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .fixer-left img:hover {
+      transform: scale(1.02);
+    }
+
+    .fixer-right {
+      flex: 1;
+      color: white;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      background: rgba(0, 31, 43, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .fixer-right p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      max-width: 500px;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .contact-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .contact-item p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0;
+      color: white;
+    }
+
+    .contact-item p strong {
+      color: #ff9d00;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      width: 52px;
+      height: 52px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-4px) scale(1.08);
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2.2rem;
+      background: #001f2b;
+      color: white;
+    }
+
+    footer a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .header .logo-container {
+        gap: 0.5rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.4rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .policies-main,
+      .fixer-section {
+        flex-direction: column;
+        padding: 1rem;
+        margin: 1.5rem auto;
+        gap: 2rem;
+      }
+
+      .policies-left,
+      .policies-right,
+      .fixer-left,
+      .fixer-right {
+        width: 100%;
+        padding: 2rem;
+      }
+
+      .policies-left img,
+      .fixer-left img {
+        max-width: 300px;
+      }
+
+      .policy-list,
+      .contact-info {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+
+      .policy-item {
+        min-width: 100%;
+        padding: 1rem;
+      }
+
+      .contact-item img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="try.html">
+        <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="try.html#home">Home</a></li>
+        <li><a href="try.html#projects-section">Projects</a></li>
+        <li><a href="try.html#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation -->
+  <nav class="sub-nav">
+    <a href="about.html">ABOUT</a>
+    <a href="programs.html">PROGRAMS</a>
+    <a href="hoaccd.html">HOACDD</a>
+    <a href="rules.html" class="active">RULES & POLICIES</a>
+    
+  </nav>
+
+  <!-- Policies Main Content -->
+  <section class="policies-main">
+    <div class="policies-left">
+      <img src="sources/Group 293.png" alt="NOON BREAK Clock Graphic" />
+    </div>
+
+    <div class="policies-right">
+      <p>
+        Ang pagpapatupad ng “NO NOON BREAK” ay ipinag-uutos sa ilalim ng Republic Act No. 9485 o Anti-Red Tape Act of 2007. Ang mga tanggapan ng pamahalaang mayroong frontline services ay pinaaalahanang magpatupad ng sistema tulad ng rotasyon upang maiwasan ang pagkaputol o pagkahimpil sa paghahatid ng kalidad na serbisyo sa publiko sa oras ng pananghalian.
+      </p>
+
+      <div class="policy-list">
+        <div class="policy-item">
+          <img src="sources/Group 295.png" alt="Cross Icon" />
+          <p>NOON BREAK</p>
+        </div>
+        <div class="policy-item">
+          <img src="sources/Group 295.png" alt="Cross Icon" />
+          <p>CUT-OFF SYSTEM</p>
+        </div>
+        <div class="policy-item">
+          <img src="sources/Group 295.png" alt="Cross Icon" />
+          <p>MAHABANG PILA</p>
+        </div>
+        <div class="policy-item">
+          <img src="sources/Group 295.png" alt="Cross Icon" />
+          <p>FIXERS</p>
+        </div>
+        <div class="policy-item">
+          <img src="sources/Group 295.png" alt="Cross Icon" />
+          <p>PROSESONG WALA SA CITIZEN’S CHARTER</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Red Tape Image Section -->
+  <section class="red-tape-section">
+    <img src="sources/redtape.png" alt="Red Tape Policy" />
+  </section>
+
+  <!-- Fixer Section -->
+  <section class="fixer-section">
+    <div class="fixer-left">
+      <img src="sources/Group 297.png" alt="NO FIXER" />
+    </div>
+
+    <div class="fixer-right">
+      <p>
+        The Anti-Red Tape Act of 2007 (R.A. 9485) imposes stiff penalty on fixers: imprisonment not exceeding six years or a fine of not more than Two Hundred Thousand Pesos (₱200,000.00), or both fine and imprisonment at the discretion of the court.
+      </p>
+      <p>
+        Report the name of fixer, name and location of government office, date and time of transaction to the following:
+      </p>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <img src="sources/csc 3.png" alt="Civil Service Commission" />
+          <div>
+            <p><strong>CIVIL SERVICE COMMISSION</strong></p>
+            <p>0917 - TEXTCSC (8398272)</p>
+            <p>(02) 932-0111</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <img src="sources/office-of-the-ombudsman 1.png" alt="Office of the Ombudsman" />
+          <div>
+            <p><strong>OFFICE OF THE OMBUDSMAN</strong></p>
+            <p>0926-6994703</p>
+            <p>(02) 927-4102; (02) 927-2404</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Footer -->
+  <footer>
+    <p><a href="try.html">← Back to Home</a></p>
+  </footer>
+
+  <!-- Back to Top JS -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
+

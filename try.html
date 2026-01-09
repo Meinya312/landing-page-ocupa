@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  // 1) Prevent automatic browser scroll restoration (run early)
+  if ('scrollRestoration' in history) {
+    try { history.scrollRestoration = 'manual'; } catch(e) { /* ignore */ }
+  }
+
+  // Helper to detect reload/navigation type
+  function isReloadNavigation() {
+    const entries = window.performance && performance.getEntriesByType
+      ? performance.getEntriesByType('navigation')
+      : null;
+    if (entries && entries.length > 0) {
+      return entries[0].type === 'reload';
+    }
+    // fallback for older browsers
+    try {
+      return performance.navigation && performance.navigation.type === performance.navigation.TYPE_RELOAD;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+
+    // If we arrived via link (hash present) AND this is NOT a reload,
+    // smoothly scroll to that section and then optionally remove the hash.
+    if (hash && !isReloadNavigation()) {
+      const target = document.querySelector(hash);
+      if (target) {
+        // Use a tiny timeout so layout is ready (helps consistent behavior)
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Optional: remove the hash after scrolling so refresh won't jump back to it
+          // Use replaceState so it doesn't push a new history entry
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }, 40);
+      }
+    }
+
+    // If this load is a page RELOAD and there was a hash, remove the hash immediately.
+    // We'll still need to override the restored scroll position below (on load).
+    if (hash && isReloadNavigation()) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  });
+
+  // On full load, force scroll to top to override any restoration that still happened.
+  // Use a slight delay / RAF to make sure it happens after the browser's restore.
+  window.addEventListener('load', () => {
+    // If this was a reload, ensure we end up at the top.
+    if (isReloadNavigation()) {
+      // Try requestAnimationFrame twice then a small timeout to be robust
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+          }, 40);
+        });
+      });
+    }
+  });
+</script>
+
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #f9fbfd;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER (NOW STICKY TOO) === */
+    .header {
+      background-color: #001f2b;
+      padding: 1rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .header .logo {
+      width: 90px;
+      height: 90px;
+    }
+
+    .header .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.8rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2.2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+      margin-bottom: -2px;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header nav a.active::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.15rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV (STICKY) === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0; /* Below header */
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+      margin-bottom: -2px;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === SLIDER SECTION === */
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      height: 520px;
+      margin-bottom: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 2.5rem;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide:nth-child(1) {
+      background-image: url('sources/ocupa team.jpg');
+      transform: translateX(0); /* ← Start at 0 */
+      background-position: center 38%;
+      opacity: 0.5;
+      
+      
+    }
+
+    .slide:nth-child(2) {
+      background-image: url('sources/desk.jpg');
+      transform: translateX(100%); /* ← Start at right */
+      background-position: center 30%;
+    }
+
+    .slide:nth-child(3) {
+      background-image: url('sources/bahay1.png');
+      transform: translateX(100%); /* ← Start at right */
+      
+    }
+
+    .slide:nth-child(4) {
+      background-image: url('sources/donvictor.jpg');
+      transform: translateX(100%); /* ← Start at right */
+    }
+
+    .slide-content {
+      background: rgba(255,255,255,0.88);
+      padding: 1.8rem;
+      border-radius: 18px;
+      max-width: 450px;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* === CAROUSEL ARROWS === */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.85);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.6rem;
+      color: #001f2b;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .arrow:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .arrow.prev {
+      left: 30px;
+    }
+
+    .arrow.next {
+      right: 30px;
+    }
+
+    /* === WE ARE OCUPA SECTION === */
+    .we-are-ocupa-section {
+      text-align: center;
+      display: flex;
+      gap: 2.5rem;
+      padding: 4rem 2rem;
+      align-items: center;
+      background: #f9fbfd; /* ← Soft blend */
+      margin: 0 auto 3rem;
+      max-width: 1400px;
+      border-radius: 16px;
+      
+    }
+
+    .we-are-ocupa-image {
+      width: 50%;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .we-are-ocupa-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .we-are-ocupa-content {
+      width: 50%;
+    }
+
+    .we-are-ocupa-content h1 {
+      font-size: 6.2rem;
+      font-weight: bold;
+      color: #001f2b;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .we-are-ocupa-content p {
+      font-size: 1.2rem;
+      color: #001f2b;
+      line-height: 1.7;
+    }
+
+    /* === DIGITAL DESIGNS SECTION === */
+    .digital-designs {
+      background: #001f2b;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      opacity: 0.95; /* ← Soften it */
+    }
+
+    .digital-designs h2 {
+      font-size: 2.7rem;
+      color: white;
+      font-weight: normal;
+      margin-bottom: 2.2rem;
+      letter-spacing: 1.2px;
+    }
+
+    .designs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .design-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .design-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .design-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .design-card-content {
+      padding: 1.8rem;
+      font-size: 1.1rem;
+      color: #001f2b;
+      line-height: 1.65;
+    }
+
+    .design-card-content h3 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+      color: #001f2b;
+    }
+
+    /* === OUR TEAM SECTION === */
+    .our-team-section {
+      background: #002a4d; /* Dark navy blue */
+      padding: 4rem 2rem;
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+      opacity: 0.95; /* ← Soften it */
+    }
+
+    .our-team-section h2 {
+      font-size: 3.7rem;
+      font-weight: normal;
+      margin-bottom: 2.5rem;
+      letter-spacing: 1.2px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-member {
+      background: rgba(255,255,255,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.3s ease, background 0.3s;
+      position: relative;
+    }
+
+    .team-member:hover {
+      transform: scale(1.06);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .team-member img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .team-member p {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.6);
+      padding: 0.6rem;
+      margin: 0;
+      font-size: 0.95rem;
+      color: white;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .team-member:hover p {
+      opacity: 1;
+    }
+
+    /* === OCUPA PROJECTS SECTION === */
+    .projects-section {
+      background: #f9fbfd;
+      padding: 4rem 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .projects-section h2 {
+      font-size: 3.2rem;
+      color: #001f2b;
+      font-weight: normal;
+      margin-bottom: 2.2rem;
+      letter-spacing: 1.2px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-item {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease;
+    }
+
+    .project-item:hover {
+      transform: scale(1.03);
+    }
+
+    .project-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* === VARIETY OF PROJECT IMAGE SHAPES === */
+    .project-item:nth-child(odd) img {
+      height: 220px;
+    }
+
+    .project-item:nth-child(even) img {
+      height: 280px;
+    }
+
+    .project-item:nth-child(3n) img {
+      height: 200px;
+    }
+
+    .project-item:nth-child(5n) img {
+      height: 300px;
+    }
+
+    /* === CONTACT INFO + MAP SECTION === */
+    .contact-section {
+      padding: 4rem 2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('sources/unnamed.jpg') no-repeat center center;
+      background-size: cover;
+      z-index: -2;
+    }
+
+    .contact-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 31, 43, 0.8);
+      z-index: -1;
+    }
+
+    .contact-content {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .contact-info .logo {
+      width: 280px;
+      height: 270px;
+      margin-bottom: 1.2rem;
+      border-radius: 12px;
+      
+    }
+
+    .contact-info h2 {
+      font-size: 2.2rem;
+      font-weight: normal;
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-info p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .contact-info .phone {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #ff9d00;
+    }
+
+    .contact-info .social {
+      font-size: 1.15rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .contact-map {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .contact-map img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .header .logo-container {
+        gap: 0.6rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.5rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        top: 140px; /* Adjust for header height */
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .we-are-ocupa-section {
+        flex-direction: column;
+        padding: 2.5rem 1rem;
+        gap: 1.8rem;
+      }
+
+      .we-are-ocupa-image,
+      .we-are-ocupa-content {
+        width: 100%;
+      }
+
+      .we-are-ocupa-content h1 {
+        font-size: 2.8rem;
+      }
+
+      .slider-container {
+        height: 400px;
+      }
+
+      .slide-content {
+        padding: 1.5rem;
+        font-size: 1rem;
+        max-width: 100%;
+      }
+
+      .digital-designs h2 {
+        font-size: 2.2rem;
+      }
+
+      .designs-grid,
+      .projects-grid,
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-content {
+        flex-direction: column;
+      }
+
+      .contact-info {
+        text-align: center;
+      }
+
+      .contact-info .logo {
+        margin: 0 auto 1.2rem;
+        width: 220px;
+        height: 220px;
+      }
+
+      .contact-info p,
+      .contact-info .phone,
+      .contact-info .social {
+        justify-content: center;
+      }
+
+      .contact-map {
+        margin-top: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header (NOW STICKY) -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="try.html">
+        <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="try.html" class="active">Home</a></li>
+        <li><a href="#projects-section">Projects</a></li>
+        <li><a href="#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation (NOW STICKY) -->
+  <nav class="sub-nav">
+    <a href="about.html">ABOUT</a>
+    <a href="programs.html">PROGRAMS</a>
+    <a href="hoaccd.html">HOACDD</a>
+    <a href="rules.html" >RULES & POLICIES</a>
+   
+  </nav>
+
+  <!-- Slider Section -->
+  <section class="slider-container">
+    <div class="slide active">
+      <div class="slide-content">
+        The Office of the City Urban Poor Affairs (OCUPA) was established to assist and support urban poor communities by providing essential services, managing beneficiary records, and facilitating access to various programs.
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-content">
+        The office plays a crucial role in ensuring that underprivileged families receive housing assistance, financial aid, and other social services.
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-content">
+        Empowering urban poor communities through innovative programs, transparent governance, and accessible services. OCUPA bridges the gap between government support and community needs.
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-content">
+        As a partner of the Department of Human Settlements and Urban Development (DHSUD) at the Lingkod HOA Desk, we provided assistance to eighteen (18) homeowners associations or walk-in clients. 
+      </div>
+    </div>
+    <div class="arrow prev">‹</div>
+    <div class="arrow next">›</div>
+  </section>
+
+  <!-- WE ARE OCUPA -->
+  <section class="we-are-ocupa-section">
+    <div class="we-are-ocupa-image">
+      <img src="sources/image1 1.png" alt="OCUPA Team Photo" />
+    </div>
+    <div class="we-are-ocupa-content">
+      <h1>WE ARE<br />OCUPA</h1>
+      <p>
+        Together, we can build stronger, more resilient communities. Join us in supporting the urban poor by participating, sharing information, or volunteering because when we help one another, everyone thrives. With OCUPA, no one is left behind.
+      </p>
+    </div>
+  </section>
+
+  <!-- DIGITAL DESIGNS (WITHOUT READ MORE BUTTON) -->
+  <section class="digital-designs">
+    <h2>Digital Designs</h2>
+    <div class="designs-grid">
+      <div class="design-card">
+        <img src="sources/image7 2.png" alt="Design I" />
+        <div class="design-card-content">
+          <h3>Design I:</h3>
+          <p>A 3D architectural visualization of residential structures, showcasing detailed floor plans, exterior designs, and interior layouts to help users understand housing configurations and spatial arrangements.</p>
+        </div>
+      </div>
+      <div class="design-card">
+        <img src="sources/image9 2.png" alt="Design II" />
+        <div class="design-card-content">
+          <h3>Design II:</h3>
+          <p>Visual documentation of residential units that balances technical accuracy with user-friendly presentation, helping stakeholders grasp room dimensions, circulation paths, and spatial hierarchy at a glance.</p>
+        </div>
+      </div>
+      <div class="design-card">
+        <img src="sources/image8 1.png" alt="Design III" />
+        <div class="design-card-content">
+          <h3>Design III:</h3>
+          <p>Design documentation focused on clarity over complexity, using clean lines and strategic annotations to highlight critical relationships between interior function and exterior form.</p>
+        </div>
+      </div>
+    </div>
+    <!-- REMOVED: Read More Button -->
+  </section>
+
+  <!-- OUR TEAM -->
+  <section class="our-team-section">
+    <h2>Our Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="sources/mam miled.jpg" alt="Team Member" />
+        <p>Miled G. Ibias</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/mam manylin.jpg" alt="Team Member" />
+        <p>Manilyn L. Macatangay</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/sir jaymark.jpg" alt="Team Member" />
+        <p>Jaymark P. Pilar</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/sirdave.jpg" alt="Team Member" />
+        <p>Divino B. Chun</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/sir jonathan.jpg" alt="Team Member" />
+        <p>Jonathan L. Revelar</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/mam digna.jpg" alt="Team Member" />
+        <p>Ma. Digna D. Bacia</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/2301-default-2.png" alt="Team Member" />
+        <p>Mary Grace S. Laguerta</p>
+      </div>
+      <div class="team-member">
+        <img src="sources/2301-default-2.png" alt="Team Member" />
+        <p>Marcus D. Causapin</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OCUPA PROJECTS -->
+  <section id="projects-section" class="projects-section">
+    <h2>OCUPA Projects</h2>
+    <div class="projects-grid">
+      <div class="project-item">
+        <img src="sources/house1.png" alt="Project 1" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house2.png" alt="Project 2" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house3.png" alt="Project 3" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house4.png" alt="Project 4" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house5.png" alt="Project 5" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house6.png" alt="Project 6" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house7.png" alt="Project 7" />
+      </div>
+      <div class="project-item">
+        <img src="sources/house1.png" alt="Project 8" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT INFO + MAP -->
+  <section id="contact-section" class="contact-section">
+    <div class="contact-content">
+      <div class="contact-info">
+        <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+        <h2>Office of the City Urban Poor Affairs</h2>
+        <p>📍 Lucena City Government Complex, Diversion Road, Barangay Kanlurang Mayao, Lucena City.</p>
+        <p class="phone">📞 (012) 345-6789</p>
+        <p class="social">💬 @OfficeoftheCityUrbanPoorAffairsPage</p>
+      </div>
+      <div class="contact-map">
+        <img src="sources/sadasd.png" alt="Map of Lucena City" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- JS for Slider -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    let currentSlide = 0;
+    let autoSlideInterval = null;
+    let restartTimeout = null;
+
+    // === SHOW SLIDE ===
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.add('active');
+          slide.style.opacity = '1';
+          slide.style.transform = 'translateX(0)';
+        } else {
+          slide.classList.remove('active');
+          slide.style.opacity = '0';
+          slide.style.transform = `translateX(${i > index ? '100%' : '-100%'})`;
+        }
+      });
+      currentSlide = index;
+    }
+
+    // === NEXT / PREVIOUS ===
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length; // ← Changed from % 2 to % slides.length
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length; // ← Changed from + 2 to + slides.length
+      showSlide(currentSlide);
+    }
+
+    // === AUTO SLIDE START (EVERY 7s) ===
+    function startAutoSlide() {
+      clearInterval(autoSlideInterval); // ensure only one
+      autoSlideInterval = setInterval(nextSlide, 7000); // ← Changed to 7s
+    }
+
+    // === STOP AUTO (PAUSE) ===
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+      clearTimeout(restartTimeout);
+    }
+
+    // === RESTART AUTO AFTER DELAY ===
+    function restartAutoSlideDelayed() {
+      clearTimeout(restartTimeout);
+      restartTimeout = setTimeout(() => {
+        startAutoSlide();
+      }, 7000); // 7-second pause after user interacts
+    }
+
+    // === BUTTON EVENTS ===
+    prevBtn.addEventListener('click', () => {
+      stopAutoSlide();
+      prevSlide();
+      restartAutoSlideDelayed();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      stopAutoSlide();
+      nextSlide();
+      restartAutoSlideDelayed();
+    });
+
+    // === HOVER BEHAVIOR ===
+    const sliderContainer = document.querySelector('.slider-container');
+
+    sliderContainer.addEventListener('mouseenter', () => {
+      stopAutoSlide();
+    });
+
+    sliderContainer.addEventListener('mouseleave', () => {
+      restartAutoSlideDelayed();
+    });
+
+    // === START AUTOMATICALLY ON PAGE LOAD ===
+    showSlide(0);       // makes sure first slide is visible instantly
+    startAutoSlide();   // auto-slide starts right away
+  </script>
+
+  <!-- JS for Smooth Scroll to Sections -->
+  <script>
+    document.querySelector('a[href="#projects-section"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('projects-section').scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+
+    document.querySelector('a[href="#contact-section"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('contact-section').scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+  <!-- JS for Back to Top -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const isReload = window.performance
+        .getEntriesByType("navigation")[0]
+        .type === "reload";
+
+      if (isReload && window.location.hash) {
+        history.replaceState(null, null, window.location.pathname);
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+    });
+  </script>
+
+</body>
+</html>

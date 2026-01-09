@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #001f2b;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER === */
+    .header {
+      background-color: #001f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header .logo {
+      width: 80px;
+      height: 80px;
+    }
+
+    .header .title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.6rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky; /* ← Makes it stick */
+      top: 0; /* ← Sticks at top */
+      z-index: 100; /* ← Stays above other content */
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === ABOUT PAGE CONTENT === */
+    .about-section {
+      padding: 3.5rem 2.5rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+      display: flex;
+      gap: 2.5rem;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 16px;
+    }
+
+    .about-main {
+      flex: 2;
+    }
+
+    .about-main h2 {
+      font-size: 2.7rem;
+      margin-bottom: 1.8rem;
+      border-bottom: 2px solid #001f2b;
+      padding-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .about-main p {
+      margin-bottom: 1.6rem;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      color: #333;
+    }
+
+    .about-main h3 {
+      font-size: 2.2rem;
+      margin: 2.2rem 0 1.2rem 0;
+      border-bottom: 2px solid #001f2b;
+      padding-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .about-sidebar {
+      flex: 1;
+      background: #f9fbfd;
+      padding: 1.8rem;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease;
+    }
+
+    .about-sidebar:hover {
+      transform: translateY(-3px);
+    }
+
+    .about-sidebar h3 {
+      font-size: 1.6rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #001f2b;
+    }
+
+    .about-sidebar img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .agency-overview {
+      margin-top: 1.5rem;
+    }
+
+    .agency-overview table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+    }
+
+    .agency-overview th,
+    .agency-overview td {
+      padding: 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .agency-overview th {
+      font-weight: bold;
+      color: #001f2b;
+      background: rgba(0,31,43,0.03);
+    }
+
+    .agency-overview a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .agency-overview a:hover {
+      text-decoration: underline;
+    }
+
+    /* === OFFICIALS SECTION === */
+    .officials-section {
+      padding: 3.5rem 2.5rem;
+      max-width: 1200px;
+      margin: 2rem auto 3rem;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 16px;
+    }
+
+    .officials-section h3 {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid #001f2b;
+      padding-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .officials-section p {
+      margin-bottom: 1.8rem;
+      font-size: 1.05rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .officials-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .officials-table th {
+      background: #001f2b;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .officials-table td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+      
+      transition: background 0.2s;
+    }
+
+    .officials-table tr:hover td {
+      background: #f9fbfd;
+    }
+
+    .officials-table img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 0 auto;
+      display: block;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .officials-table .name,
+    .officials-table .position {
+      
+      padding-left: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #001f2b;
+      color: white;
+    }
+
+    footer a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .header .logo-container {
+        gap: 0.5rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.4rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .about-section {
+        flex-direction: column;
+        padding: 2rem 1.2rem;
+        margin: 1.5rem auto;
+        gap: 1.8rem;
+      }
+
+      .about-main,
+      .about-sidebar {
+        width: 100%;
+      }
+
+      .about-main h2 {
+        font-size: 2.2rem;
+      }
+
+      .about-main h3 {
+        font-size: 1.8rem;
+      }
+
+      .about-sidebar {
+        margin-top: 1rem;
+      }
+
+      .officials-section {
+        padding: 2rem 1.2rem;
+        margin: 1.5rem auto;
+      }
+
+      .officials-section h3 {
+        font-size: 1.8rem;
+      }
+
+      .officials-table th,
+      .officials-table td {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .officials-table img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="try.html">
+        <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="try.html#home">Home</a></li>
+        <li><a href="try.html#projects-section">Projects</a></li>
+        <li><a href="try.html#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation -->
+  <nav class="sub-nav">
+    <a href="about.html" class="active">ABOUT</a>
+    <a href="programs.html">PROGRAMS</a>
+    <a href="hoaccd.html">HOACDD</a>
+    <a href="rules.html">RULES & POLICIES</a>
+    
+  </nav>
+
+  <!-- About Page Content -->
+  <section class="about-section">
+    <div class="about-main">
+      <h2>Office of the City Urban Poor Affairs</h2>
+      <p>
+        The Office of the City Urban Poor Affairs (OCUPA) is a government agency under the City Government of Lucena responsible for addressing the needs and concerns of the urban poor sector. Its primary function is to assist underprivileged families by providing access to socialized housing, community development programs, and related support services. OCUPA manages beneficiary information, evaluates housing applications, coordinates with various sectors, and ensures that qualified individuals receive appropriate assistance.
+
+The office plays a crucial role in organizing urban poor communities, maintaining updated records of beneficiaries, and monitoring the status of on-site and off-site housing projects across the 33 barangays of Lucena City. OCUPA also handles documentation, verification of eligibility, and the preparation of monthly and annual reports that guide decision-making within the local government. Through its administrative and field operations, the office serves as the central channel for ensuring that services reach the families and communities that need them most.
+      </p>
+
+      <h3>History</h3>
+      <p>
+       The Office of the City Urban Poor Affairs, formerly known as the Urban Poor Affairs Division (UPAD), was established in 1989 during the term of former Mayor Cesar Zaballero. It was created in response to the growing need for an organized system that would support socialized housing initiatives for underprivileged and homeless citizens of Lucena City. The office was formed to help uplift living conditions by providing secure and affordable housing options along with access to basic services and livelihood opportunities.
+
+
+      </p>
+      <p>
+        Since its establishment, the office has expanded its scope to include the monitoring of 154 urban poor communities across Lucena City. Over the years, OCUPA has handled the verification, documentation, and management of thousands of beneficiary records. Although the office adopted a Visual Basic–based record management system in earlier years, much of its verification and data processing remained manual, leading to challenges in accuracy and efficiency. This historical transition highlights the necessity for modernization and serves as the foundation for the development of the proposed digital information management system.
+      </p>
+    </div>
+
+    <div class="about-sidebar">
+      <h3>OCUPA</h3>
+      <p style="text-align: center; margin-bottom: 1rem;">Urban Poor Affairs</p>
+      <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Seal" />
+      <p style="text-align: center; margin: 0.5rem 0;">Seal</p>
+
+      <div class="agency-overview">
+        <img src="sources/unnamed.jpg" alt="OCUPA Building" style="margin-bottom: 1rem;" />
+        <h3>Agency Overview</h3>
+        <table>
+          <tr>
+            <th>Address</th>
+            <td>Lucena City Government Complex,<br>Diversion Road,<br>Barangay Kanlurang Mayao.</td>
+          </tr>
+          <tr>
+            <th>Jurisdiction</th>
+            <td>Philippines</td>
+          </tr>
+          <tr>
+            <th>Employees</th>
+            <td>8</td>
+          </tr>
+          <tr>
+            <th>Website</th>
+            <td><a href="https://www.facebook.com/upad.lucena" target="_blank">https://www.facebook.com/upad.lucena</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Officials Section -->
+  <section class="officials-section">
+    <h3>Officials</h3>
+    <p>
+      OCUPA is managed by a small team of officials responsible for handling administrative tasks, field verification, and beneficiary coordination. Led by the Officer-in-Charge, the staff consists of administrative aides and support personnel who work together to manage records, process applications, and assist urban poor communities across Lucena City.
+    </p>
+    <table class="officials-table">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="sources/mam miled.jpg" alt="Official 1" /></td>
+          <td class="name">Miled G Ibias</td>
+          <td class="position">City Urban Poor Affairs Officer (Head)</td>
+        </tr>
+        <tr>
+          <td><img src="sources/mam manylin.jpg" alt="Official 2" /></td>
+          <td class="name">Manilyn L. Macatangay</td>
+          <td class="position">Disbursing Officer II</td>
+        </tr>
+        <tr>
+          <td><img src="sources/sir jaymark.jpg" alt="Official 3" /></td>
+          <td class="name">Jaymark P. Pilar</td>
+          <td class="position">Technical Division
+              Job Order Contractual</td>
+        </tr>
+        <tr>
+          <td><img src="sources/sir jonathan.jpg" alt="Official 4" /></td>
+          <td class="name">Jonathan L. Revelar</td>
+          <td class="position">Fiscal Examiner I</td>
+        </tr>
+        <tr>
+          <td><img src="sources/sirdave.jpg" alt="Official 5" /></td>
+          <td class="name">Divino B. Chun</td>
+          <td class="position">Administrative Division
+Job Order Contractual</td>
+        </tr>
+        <tr>
+          <td><img src="sources/mam digna.jpg" alt="Official 6" /></td>
+          <td class="name">Ma. Digna D. Bacia</td>
+          <td class="position">Organization Division
+Job Order Contractual</td>
+        </tr>
+        <tr>
+          <td><img src="sources/" alt="Official 7" /></td>
+          <td class="name">Mary Grace S. Laguerta</td>
+          <td class="position">Administrative Division
+Job Order Contractual</td>
+        </tr>
+        <tr>
+          <td><img src="sources/team3.webp" alt="Official 8" /></td>
+          <td class="name">Marcus D. Causapin</td>
+          <td class="position">Technical Division
+Job Order Contractual</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Footer -->
+  <footer>
+    <p><a href="try.html">← Back to Home</a></p>
+  </footer>
+
+  <!-- Back to Top JS -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
+

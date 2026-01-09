@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HOACDD - Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #001f2b;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER === */
+    .header {
+      background-color: #001f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header .logo {
+      width: 80px;
+      height: 80px;
+    }
+
+    .header .title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.6rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky; /* ← Makes it stick */
+      top: 0; /* ← Sticks at top */
+      z-index: 100; /* ← Stays above other content */
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === HOACDD MAIN SECTION === */
+    .hoacdd-main {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      display: flex;
+      gap: 2.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .hoacdd-left {
+      flex: 1;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease;
+    }
+
+    .hoacdd-left:hover {
+      transform: translateY(-5px);
+    }
+
+    .hoacdd-hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .hoacdd-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 25%;
+      width: 50%;
+      height: 3px;
+      background: #ff9d00;
+      border-radius: 3px;
+    }
+
+    .hoacdd-hero h1 {
+      font-size: 2.7rem;
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+      color: #001f2b;
+    }
+
+    .hoacdd-hero h1 span {
+      color: #ff9d00;
+      font-weight: bold;
+    }
+
+    .hoacdd-left h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.8rem;
+      color: #001f2b;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .step {
+      background: #f9fbfd;
+      border: 2px solid #001f2b;
+      border-radius: 32px;
+      padding: 1.6rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .step:hover {
+      border-color: #ff9d00;
+      background: #fff9f0;
+    }
+
+    .step-number {
+      width: 65px;
+      height: 65px;
+      background: #001f2b;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: #001f2b;
+    }
+
+    .step-text strong {
+      font-weight: bold;
+      color: #001f2b;
+    }
+
+    .hoacdd-right {
+      flex: 1;
+      color: white;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 31, 43, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .hoacdd-right img {
+      width: 380px;
+      height: 380px;
+      object-fit: contain;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .hoacdd-right img:hover {
+      transform: scale(1.03);
+    }
+
+    .hoacdd-right p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin: 1.2rem 0;
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .hoacdd-right p:last-child {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #ff9d00;
+    }
+
+    .qr-section {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    .qr-section h3 {
+      font-size: 1.7rem;
+      margin-bottom: 1.2rem;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+
+    .qr-section img {
+      width: 280px;
+      height: 280px;
+      margin-bottom: 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .qr-section img:hover {
+      transform: scale(1.05);
+    }
+
+    .qr-section p {
+      font-size: 1rem;
+      color: #ff9d00;
+      font-weight: bold;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      width: 52px;
+      height: 52px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-4px) scale(1.08);
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2.2rem;
+      background: #001f2b;
+      color: white;
+    }
+
+    footer a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .header .logo-container {
+        gap: 0.5rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.4rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .hoacdd-main {
+        flex-direction: column;
+        padding: 1rem;
+        margin: 1.5rem auto;
+        gap: 2rem;
+      }
+
+      .hoacdd-left,
+      .hoacdd-right {
+        width: 100%;
+        padding: 2rem;
+      }
+
+      .hoacdd-hero h1 {
+        font-size: 2.1rem;
+      }
+
+      .hoacdd-left h2 {
+        font-size: 1.8rem;
+      }
+
+      .step {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.4rem;
+      }
+
+      .step-number {
+        width: 55px;
+        height: 55px;
+        font-size: 1.7rem;
+      }
+
+      .hoacdd-right img {
+        width: 240px;
+        height: 240px;
+      }
+
+      .qr-section img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="try.html">
+        <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="try.html#home">Home</a></li>
+        <li><a href="try.html#projects-section">Projects</a></li>
+        <li><a href="try.html#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation -->
+  <nav class="sub-nav">
+    <a href="about.html">ABOUT</a>
+    <a href="programs.html">PROGRAMS</a>
+    <a href="hoaccd.html" class="active">HOACDD</a>
+    <a href="rules.html">RULES & POLICIES</a>
+    
+  </nav>
+
+  <!-- HOACDD Main Content -->
+  <section class="hoacdd-main">
+    <div class="hoacdd-left">
+      <div class="hoacdd-hero">
+        <h1>Pick your Schedule<br>with <span>HOACDD</span> Online<br>Appointment System</h1>
+      </div>
+      <h2>HOW TO BOOK?</h2>
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-text"><strong>Book an appointment through our Facebook page!</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-text"><strong>Click Sign-up or book through the chatbot in our Facebook Messenger</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-text"><strong>Choose your transaction</strong><br>Click on the services that you need and the concerned section.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-text"><strong>PICK A SCHEDULE</strong><br>Click your preferred date and time</div>
+      </div>
+      <div class="step">
+        <div class="step-number">5</div>
+        <div class="step-text"><strong>Enter your information</strong><br>Provide your complete information</div>
+      </div>
+      <div class="step">
+        <div class="step-number">6</div>
+        <div class="step-text"><strong>Confirm your appointment</strong><br>By clicking Book Appointment</div>
+      </div>
+      <div class="step">
+        <div class="step-number">7</div>
+        <div class="step-text"><strong>Booking Confirmation</strong><br>Prepare a copy of the booking confirmation sent to your email and present it to the Office-of-the-day.</div>
+      </div>
+    </div>
+
+    <div class="hoacdd-right">
+      <img src="sources/Department_of_Human_Settlements_and_Urban_Development_(DHSUD) 1.png" alt="Department of Human Settlements and Urban Development Seal" />
+      <p>Applying for HOA registration, needs consultation or just want to submit reports, but the queues are too long?</p>
+      <p>We heard you <strong>HOAn</strong> and we are on it!</p>
+      <p>HOACDD is launching its Online Appointing System. Customize your visit in DHSUD Region 4A. Pick your preferred date and time, and decide which services you need! It’s up to you, only the services you choose will appear on your online appointment — saving you time and effort.</p>
+
+      <div class="qr-section">
+        <h3>Scan to book!</h3>
+        <img src="sources/Qr Code.png" alt="QR Code to Book" />
+        <p>Strictly implementation of this online appointment system will start on 17 April 2023.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Footer -->
+  <footer>
+    <p><a href="try.html">← Back to Home</a></p>
+  </footer>
+
+  <!-- Back to Top JS -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
+

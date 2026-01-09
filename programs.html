@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programs - Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #001f2b;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER === */
+    .header {
+      background-color: #001f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header .logo {
+      width: 80px;
+      height: 80px;
+    }
+
+    .header .title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.6rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky; /* ← Makes it stick */
+      top: 0; /* ← Sticks at top */
+      z-index: 100; /* ← Stays above other content */
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === PROGRAMS TITLE SECTION === */
+    .programs-title {
+      text-align: center;
+      color: white;
+      margin: 2.8rem auto 2rem;
+      max-width: 1200px;
+      padding: 0 1.5rem;
+    }
+
+    .programs-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    .programs-title p {
+      font-size: 1.15rem;
+      opacity: 0.92;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* === PROGRAMS MAIN SECTION === */
+    .programs-main {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      padding: 0 1.5rem;
+    }
+
+    .program-card-link {
+      text-decoration: none;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .program-card-link:hover {
+      transform: translateY(-4px);
+    }
+
+    .program-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      display: flex;
+      gap: 1.8rem;
+      align-items: flex-start;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .program-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+    }
+
+    .program-icon {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #f8f9fa;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .program-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .program-content {
+      flex: 1;
+    }
+
+    .program-content h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+      color: #001f2b;
+      letter-spacing: 0.3px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .program-content p {
+      font-size: 1.08rem;
+      line-height: 1.65;
+      color: #333;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      width: 52px;
+      height: 52px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-4px) scale(1.08);
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2.2rem;
+      background: #001f2b;
+      color: white;
+    }
+
+    footer a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .header .logo-container {
+        gap: 0.5rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.4rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .programs-title {
+        padding: 0 1rem;
+        margin: 2rem auto 1.5rem;
+      }
+
+      .programs-title h2 {
+        font-size: 2rem;
+      }
+
+      .programs-title p {
+        font-size: 1.05rem;
+      }
+
+      .programs-main {
+        padding: 1rem;
+        gap: 1.5rem;
+      }
+
+      .program-card {
+        padding: 1.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .program-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 1.2rem;
+        padding: 10px;
+      }
+
+      .program-content h3 {
+        font-size: 1.2rem;
+      }
+
+      .program-content p {
+        font-size: 1rem;
+      }
+
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="try.html">
+        <img src="sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="try.html#home">Home</a></li>
+        <li><a href="try.html#projects-section">Projects</a></li>
+        <li><a href="try.html#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation -->
+  <nav class="sub-nav">
+    <a href="about.html">ABOUT</a>
+    <a href="programs.html" class="active">PROGRAMS</a>
+    <a href="hoaccd.html">HOACDD</a>
+    <a href="rules.html">RULES & POLICIES</a>
+    
+  </nav>
+
+  <!-- Programs Title -->
+  <section class="programs-title">
+    <h2>Office of the City Urban Poor Affairs Department</h2>
+    <p>offers various kind of programs and services!</p>
+  </section>
+
+  <!-- Programs List -->
+  <section class="programs-main">
+
+    <!-- External Services -->
+    <a href="programs/external-services.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/Bahay.png" alt="External Services" />
+        </div>
+        <div class="program-content">
+          <h3>OFFICE OF THE CITY URBAN POOR AFFAIRS: EXTERNAL SERVICES</h3>
+          <p>Housing Services, Organization Services, General Services</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Availment of Socialized Housing Program -->
+    <a href="programs/availment-of-socialized-housing.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/3 bilog availment.png" alt="Socialized Housing" />
+        </div>
+        <div class="program-content">
+          <h3>AVAILMENT OF SOCIALIZED HOUSING PROGRAM</h3>
+          <p>Application of Housing Loan, Socialize Housing Unit, Tenement Housing Project or DVV2.</p>
+        </div>
+      </div>
+    </a>
+
+        <!-- Direct Sale Program -->
+    <a href="programs/direct-sale-program.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/direct sale.png" alt="Direct Sale Program" />
+        </div>
+        <div class="program-content">
+          <h3>DIRECT SALE PROGRAM FOR THE INFORMAL SETTLER FAMILIES (ISF) AND URBAN POOR ASSOCIATION</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Assistance to ISF / Association in Registration -->
+    <a href="programs/registration-assistance.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/assistance to informal.png" alt="DHSUD Registration" />
+        </div>
+        <div class="program-content">
+          <h3>ASSISTANCE TO INFORMAL SETTLER FAMILIES (ISF) / URBAN POOR ASSOCIATION IN REGISTRATION AND/OR UPDATING WITH THE DHSUD REGISTRATION</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Organizational Matters -->
+    <a href="programs/organizational-matters.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/organizational matters.png" alt="Organizational Matters" />
+        </div>
+        <div class="program-content">
+          <h3>ASSISTANCE TO INFORMAL SETTLER FAMILIES (ISF) AND URBAN POOR ASSOCIATION CONCERNING ORGANIZATIONAL MATTERS</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Investigation / Validation -->
+    <a href="programs/investigation-validation.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/investigation.png" alt="Investigation/Validation" />
+        </div>
+        <div class="program-content">
+          <h3>INVESTIGATION / VALIDATION ON LAND AND HOUSING RELATED CONCERNS ESPECIALLY ON DEMOLITION AND EVICTION CASES INVOLVING ISF OR ASSOCIATION</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Meralco / Primewater Application -->
+    <a href="programs/meralco-primewater.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/permit application.png" alt="Meralco/Primewater" />
+        </div>
+        <div class="program-content">
+          <h3>ASSISTANCE TO INFORMAL SETTLER FAMILIES AND URBAN POOR ASSOCIATIONS ON MERALCO AND PRIMEWATER APPLICATION AND BUSINESS PERMIT APPLICATION</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Concerns and Requests -->
+    <a href="programs/concerns-requests.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/concern and request.png" alt="Concerns and Requests" />
+        </div>
+        <div class="program-content">
+          <h3>ASSISTANCE TO URBAN POOR ASSOCIATION RELATIVE TO THEIR CONCERN AND REQUEST</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Beneficiary Accounts -->
+    <a href="programs/beneficiary-accounts.html" class="program-card-link">
+      <div class="program-card">
+        <div class="program-icon">
+          <img src="sources/beneficiary accounts.png" alt="Beneficiary Accounts" />
+        </div>
+        <div class="program-content">
+          <h3>BENEFICIARY ACCOUNTS SERVICES AND MANAGEMENT - AMORTIZATION PAYMENT AND OTHER PAYMENTS</h3>
+          <p></p>
+        </div>
+      </div>
+    </a>
+
+  </section>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Footer -->
+  <footer>
+    <p><a href="try.html">← Back to Home</a></p>
+  </footer>
+
+  <!-- Back to Top JS -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
