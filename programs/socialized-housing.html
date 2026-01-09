@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Application of Housing Loan under Pag-Ibig Fund - Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #f9fbfd;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER === */
+    .header {
+      background-color: #001f2b;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .header .logo {
+      width: 90px;
+      height: 90px;
+    }
+
+    .header .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.8rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2.2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+      margin-bottom: -2px;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header nav a.active::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.15rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky; /* ← Makes it stick */
+      top: 0; /* ← Sticks at top */
+      z-index: 100; /* ← Stays above other content */
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+      margin-bottom: -2px;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === BREADCRUMB === */
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 2.2rem auto 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      font-size: 1rem;
+      color: #001f2b;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .breadcrumb a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .breadcrumb a:hover {
+      color: #ff9d00;
+    }
+
+    .breadcrumb a.active {
+      color: #ff9d00;
+    }
+
+    .breadcrumb span {
+      margin: 0 0.6rem;
+      color: #666;
+    }
+
+    /* === CONTENT SECTION === */
+    .content-section {
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      padding: 2.5rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .content-section h2 {
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
+      color: #001f2b;
+      text-align: center;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #001f2b;
+      padding-bottom: 0.8rem;
+    }
+
+    .intro-text {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+      border: 1px solid #ddd;
+    }
+
+    .info-table th,
+    .info-table td {
+      padding: 0.8rem;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .info-table th {
+      background: #001f2b;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .info-table tr:nth-child(even) {
+      background: #f9fbfd;
+    }
+
+    .checklist-header {
+      background: #001f2b;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: grid;                    /* ← use grid */
+      grid-template-columns: 1fr 1fr;   /* ← same layout as items */
+      text-align: left;
+    }
+
+
+    .checklist-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      margin-bottom: 0.5rem;
+    }
+
+    .checklist-item .step {
+      font-weight: bold;
+      color: #001f2b;
+    }
+
+    .checklist-item .where {
+      color: #333;
+    }
+
+    .process-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+      border: 1px solid #ddd;
+    }
+
+    .process-table th {
+      background: #001f2b;
+      color: white;
+      font-weight: bold;
+      padding: 0.8rem;
+      text-align: center;
+    }
+
+    .process-table td {
+      padding: 0.8rem;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    .process-table td:first-child {
+      text-align: left;
+    }
+
+    .note {
+      background: #666;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .total-time {
+      font-weight: bold;
+      text-align: right;
+      padding: 0.5rem;
+      background: #f0f0f0;
+      border-top: 2px solid #001f2b;
+    }
+
+    /* === GO BACK BUTTON === */
+    .go-back {
+      display: flex;
+      justify-content: center;
+      margin: 2.5rem auto;
+      max-width: 1200px;
+    }
+
+    .go-back-btn {
+      background: white;
+      color: #001f2b;
+      padding: 0.8rem 2rem;
+      border-radius: 32px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .go-back-btn:hover {
+      background: #ff9d00;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(255,157,0,0.3);
+      border-color: #ff9d00;
+    }
+
+    .go-back-btn::before {
+      content: '←';
+      font-size: 1.3rem;
+    }
+
+    .go-back-btn.active {
+      background: #ff9d00;
+      color: white;
+      border-color: #ff9d00;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 52px;
+      height: 52px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-4px) scale(1.08);
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2.2rem;
+      background: #001f2b;
+      color: white;
+    }
+
+    footer a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .header .logo-container {
+        gap: 0.6rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.5rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .breadcrumb {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        margin: 1.8rem auto 1.2rem;
+      }
+
+      .content-section {
+        padding: 2rem 1.5rem;
+        margin: 1.5rem auto;
+      }
+
+      .content-section h2 {
+        font-size: 2rem;
+      }
+
+      .intro-text {
+        font-size: 1.05rem;
+      }
+
+      .info-table,
+      .process-table {
+        font-size: 0.95rem;
+      }
+
+      .checklist-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .go-back-btn {
+        padding: 0.7rem 1.8rem;
+        font-size: 1.1rem;
+      }
+
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="../try.html">
+        <img src="../sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../try.html">Home</a></li>
+        <li><a href="../try.html#projects-section">Projects</a></li>
+        <li><a href="../try.html#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation -->
+  <nav class="sub-nav">
+    <a href="../about.html">ABOUT</a>
+    <a href="../programs.html" class="active">PROGRAMS</a>  <!-- ✅ Highlighted as active -->
+    <a href="../hoaccd.html">HOACDD</a>
+    <a href="../rules.html">RULES & POLICIES</a>
+    
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="../programs.html">Programs</a>
+    <span>\</span>
+    <a href="availment-of-socialized-housing.html">Availment of Socialized Housing Program</a>
+    <span>\</span>
+    <a href="#" >Application of Housing Loan under Pag-Ibig Fund</a>
+  </div>
+
+  <!-- Content Section -->
+  <section class="content-section">
+    <h2>Availment of Socialized Housing Program: Application of Housing Loan under Pag-Ibig Fund</h2>
+
+    <div class="intro-text">
+      The Don Victor Ville is a program wherein the City Government of Lucena initiates construction of socialized housing projects and makes the constructed units available for application to its qualified beneficiaries through a housing loan scheme at PAG-IBIG Fund.
+    </div>
+
+    <table class="info-table">
+      <tr>
+        <th>Office or Division:</th>
+        <td>Housing Services Division/Office of the City Urban Poor Affairs</td>
+      </tr>
+      <tr>
+        <th>Classification:</th>
+        <td>Highly Technical</td>
+      </tr>
+      <tr>
+        <th>Type of Transaction:</th>
+        <td>
+          G2C - Government to Citizen<br>
+          G2G - Government to Government
+        </td>
+      </tr>
+      <tr>
+        <th>Who may avail:</th>
+        <td>
+          LGU Employees and Transport Group Sectors (JODA);<br>
+          Informal Settler Families
+        </td>
+      </tr>
+    </table>
+
+    <div class="checklist-header">
+      <span>CHECKLIST OF REQUIREMENTS</span>
+      <span>WHERE TO SECURE</span>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">1. Duly signed Application (4 copies) and Beneficiary Profile</div>
+      <div class="where">Office of the City Urban Poor Affairs (OCUPA)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">2. Certification that no pending administrative case filed against the applicant</div>
+      <div class="where">City Human Resource Management Office (CHRMO)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">3. Certificate of Net Take Home Pay - Latest Pay Slip</div>
+      <div class="where">City Accounting Office (CAO)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">4. Certificate of Employment with Compensation - (Notarized)</div>
+      <div class="where">City Human Resource Management Office (CHRMO)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">5. Endorsement Letter</div>
+      <div class="where">Head of the Office</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">6. 3 Valid ID (Voter’s/Pag-IBIG/Employment)</div>
+      <div class="where">Client (Applicant)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">7. Certificate of Residency</div>
+      <div class="where">Barangay Hall</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">8. Birth Certificate</div>
+      <div class="where">Civil Registrar’s Office / PSA</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">9. If married, marriage contract, If single, CENOMAR</div>
+      <div class="where">PSA</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">10. Valid ID of Spouse (at least 2)</div>
+      <div class="where">Client (Applicant)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">11. TIN Card</div>
+      <div class="where">BIR/Client (Applicant)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">12. Pag-IBIG Processing Fee Php 3,000.00 (Non-Refundable)</div>
+      <div class="where">Client (Applicant)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">13. MSVS filled-up Form</div>
+      <div class="where">Office of the City Urban Poor Affairs (OCUPA)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">14. Certificate of No Real Property - Assessor</div>
+      <div class="where">City Assessor’s Office</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">15. Photocopy of Cedula</div>
+      <div class="where">City Assessor’s Office</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">16. Proof of Billing</div>
+      <div class="where">Client to secure from MERALCO, PLDT, PrimeWater, etc.</div>
+    </div>
+
+    <table class="process-table">
+      <thead>
+        <tr>
+          <th>CLIENT STEPS</th>
+          <th>AGENCY ACTION</th>
+          <th>FEES TO BE PAID</th>
+          <th>PROCESSING TIME</th>
+          <th>PERSON RESPONSIBLE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1. Sign in the the Client Logbook in the Office front desk</td>
+          <td>1. Assist the client</td>
+          <td>None</td>
+          <td>5 sec</td>
+          <td>Officer of the Day</td>
+        </tr>
+        <tr>
+          <td>2. The applicant shall submit all the requirements to the Housing Services Division for pre-evaluation</td>
+          <td>2. Receive application with attached requirements.<br><br>Screen and pre-evaluate application and submitted requirements.<br><br>Submit to the Local Housing Board Technical Working Group and recommend for the approval of the Local Chief Executive</td>
+          <td>None</td>
+          <td>1 min.<br>10 min.</td>
+          <td>Manilyn L. Macatangay<br>Disbursing Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I<br>Miled G. Ibias<br>City Department Head II<br>Disbursing Office II</td>
+        </tr>
+        <tr>
+          <td>3. The applicant shall attend the pre-orientation and initial CIBI.</td>
+          <td>3. Conduct pre-orientation and CIBI in partnership with the PAG-IBIG Fund.<br><br>Determine if the beneficiary/applicant is qualified by the loan amount applied for and check the Membership Status Verification Slip (MSVS). The MSVS must be with 24 months’ contribution<br><br>Determine the beneficiary’s/applicant’s model house unit and block and allocation<br><br>Prepare, encode and print the loan documents.</td>
+          <td>None</td>
+          <td>4 hours</td>
+          <td>Jonathan L. Revelar<br>Fiscal Examiner I<br>Manilyn L. Macatangay<br>Disbursing Officer II</td>
+        </tr>
+        <tr>
+          <td>4. The applicant shall sign in loan documents on the scheduled date.</td>
+          <td>4. Facilitate the signing of beneficiary loan documents.</td>
+          <td>None</td>
+          <td>15 min.</td>
+          <td>Manilyn L. Macatangay<br>Disbursing Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I</td>
+        </tr>
+        <tr>
+          <td>5. After the signing of loan documents and other requirements, the applicant will be informed that these documents will be submitted to and evaluated by the PagIBIG Calamba-LOD: Loans Evaluation Developer Assisted Division</td>
+          <td>5. Review the application and loan documents.<br><br>Forward the loan documents to the Office of the City Mayor’s Office for signature and City Legal office for notarize.<br><br>Arrange the individual folder for 1st filing.<br><br>Submit to PAGIBIG Fund Calamba.<br><br>Pay the initial processing fee/1st filing fee.</td>
+          <td>Php 1,000.00 - Processing Fee for 1st Filing</td>
+          <td>15 min.</td>
+          <td>Manilyn L. Macatangay<br>Disbursing Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I<br>Manilyn L. Macatangay<br>Disbursing Officer II</td>
+        </tr>
+        <tr>
+          <td>6. The applicant may follow-up his/her application status</td>
+          <td>6. If with Notice of Approval (NOA), inform the applicant immediately for his/her tentative monthly amortization.<br><br>Prepare the necessary documents for 2nd filing<br><br>If with Notice of Deficiency (NOD), inform the applicant immediately and comply the necessary documents as prerequisite for the issuance of NOA. If failed to comply within the required period of time due to unexpected situation, refiling fee is applicable</td>
+          <td>Php 2,000.00 - Processing Fee for 2nd Filing<br><br>Additional Php 1,000.00 for refiling fee</td>
+          <td>24 days of waiting period for the approval or it may depend from the PagIBIG Fund Calamba<br><br>90 days of compliance from the NOA date<br><br>60 calendar days<br><br>30 calendar days from the NOD date</td>
+          <td>Manilyn L. Macatangay<br>Disbursing Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I<br>Jaymark Pilar<br>Job-Order Contractual<br>Manilyn L. Macatangay<br>Disbursing Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I</td>
+        </tr>
+        <tr>
+          <td>7. The beneficiary shall attend the turn-over and acceptance of the unit<br><br>Receive the Certificate of House & Lot Award</td>
+          <td>7. Conduit turn-over and acceptance of the unit.<br><br>Prepare the Certificate of House & Lot Award</td>
+          <td>None</td>
+          <td>1 day</td>
+          <td>Manilyn L. Macatangay<br>Disburse Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I<br>Miled G. Ibias<br>City Department Head II</td>
+        </tr>
+        <tr>
+          <td>8. Comply the necessary documents base on NOA or NOD</td>
+          <td>8. Submit the necessary documents to the PagIBIG Fund within the prescribed period.</td>
+          <td>None</td>
+          <td>1 day</td>
+          <td>Manilyn L. Macatangay<br>Disburse Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I</td>
+        </tr>
+        <tr>
+          <td>9. Attend the beneficiary in borrower’s validation</td>
+          <td>9. Coordinate with the PAG-IBIG Fund regrading the Borrower’s Validation</td>
+          <td>None</td>
+          <td>4 hrs.</td>
+          <td>Manilyn L. Macatangay<br>Disburse Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I</td>
+        </tr>
+        <tr>
+          <td>10. Wait for the release of take-out loan proceeds</td>
+          <td>10. Issue Sales Invoice at Pag-Ibig for the take-out loan proceeds<br><br>Provide the beneficiary and City Accounting Office a photocopy of Request for Payment (RFP) and other necessary documents of the loan release for the monthly amortization/loan deduction of the beneficiary</td>
+          <td>1st or 2nd Monthly amortization should be paid to the Pagibig Fund and the following amortization will be salary deduction</td>
+          <td>4 hrs.</td>
+          <td>Manilyn L. Macatangay<br>Disburse Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I</td>
+        </tr>
+        <tr>
+          <td>11. Receives Order of Payment abd pays for the Equity at the City Treasurer’s Office Cashier</td>
+          <td>11. Issues Order of Payment<br><br>Accepts Official Receipt (photocopy) for monitoring of Equity Payment</td>
+          <td>Equity (based on RFP) should be paid right after the release of take-out loan payable within 3 months</td>
+          <td>15 min.</td>
+          <td>Manilyn L. Macatangay<br>Disburse Officer II<br>Jonathan L. Revelar<br>Fiscal Examiner I</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      Note: The approval of the loan application at PAGIBIG Fund is usually 24 days more or less upon submission of the complete requirements
+    </div>
+
+    <div class="total-time">
+      TOTAL TIME: 3 days, 4 hours, 56 minutes, 5 seconds - processing time of office<br>204 days - number of days of compliance to secure the requirements depends on Pag-IBIG Fund
+    </div>
+  </section>
+
+  <!-- Go Back Button -->
+  <div class="go-back">
+    <a href="../programs.html" class="go-back-btn">Go back</a>
+  </div>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Footer -->
+  <footer>
+    <p><a href="../try.html">← Back to Home</a></p>
+  </footer>
+
+  <!-- Back to Top JS -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
+

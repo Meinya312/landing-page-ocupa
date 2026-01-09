@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Direct Sale Program - Office of the City Urban Poor Affairs</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET & BASE STYLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #001f2b;
+      background: #f9fbfd;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    p, a, li, span {
+      font-weight: 400;
+    }
+
+    /* === HEADER === */
+    .header {
+      background-color: #001f2b;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d9d9d9;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .header .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .header .logo {
+      width: 90px;
+      height: 90px;
+    }
+
+    .header .title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .header .title span {
+      display: block;
+      font-size: 1.8rem;
+      color: white;
+    }
+
+    .header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2.2rem;
+      align-items: center;
+    }
+
+    .header nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+      position: relative;
+      padding: 0.4rem 0;
+    }
+
+    .header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff9d00;
+      transition: width 0.3s ease;
+      margin-bottom: -2px;
+    }
+
+    .header nav a:hover::after {
+      width: 100%;
+    }
+
+    .header nav a.active::after {
+      width: 100%;
+    }
+
+    .header .sign-in {
+      background: #ff9d00;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.15rem;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .header .sign-in:hover {
+      background: #e08a00;
+      transform: translateY(-2px);
+    }
+
+    /* === SECONDARY NAV === */
+    .sub-nav {
+      background: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10.5rem;
+      border-bottom: 1px solid #eee;
+      position: sticky; /* ← Makes it stick */
+      top: 0; /* ← Sticks at top */
+      z-index: 100; /* ← Stays above other content */
+    }
+
+    .sub-nav a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .sub-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #001f2b;
+      transition: width 0.2s;
+      margin-bottom: -2px;
+    }
+
+    .sub-nav a:hover::after {
+      width: 100%;
+    }
+
+    .sub-nav a.active {
+      color: #ff9d00;
+    }
+
+    .sub-nav a.active::after {
+      background: #ff9d00;
+      width: 100%;
+    }
+
+    .search-icon {
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === BREADCRUMB === */
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 2.2rem auto 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      font-size: 1rem;
+      color: #001f2b;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .breadcrumb a {
+      color: #001f2b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .breadcrumb a:hover {
+      color: #ff9d00;
+    }
+
+    .breadcrumb span {
+      margin: 0 0.6rem;
+      color: #666;
+    }
+
+    /* === CONTENT SECTION === */
+    .content-section {
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      padding: 2.5rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .content-section h2 {
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
+      color: #001f2b;
+      text-align: center;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #001f2b;
+      padding-bottom: 0.8rem;
+    }
+
+    .intro-text {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+      border: 1px solid #ddd;
+    }
+
+    .info-table th,
+    .info-table td {
+      padding: 0.8rem;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .info-table th {
+      background: #001f2b;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .info-table tr:nth-child(even) {
+      background: #f9fbfd;
+    }
+
+    .checklist-header {
+      background: #001f2b;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: grid;                    /* ← use grid */
+      grid-template-columns: 1fr 1fr;   /* ← same layout as items */
+      text-align: left;
+    }
+
+
+    .checklist-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      margin-bottom: 0.5rem;
+    }
+
+    .checklist-item .step {
+      font-weight: bold;
+      color: #001f2b;
+    }
+
+    .checklist-item .where {
+      color: #333;
+    }
+
+    .process-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+      border: 1px solid #ddd;
+    }
+
+    .process-table th {
+      background: #001f2b;
+      color: white;
+      font-weight: bold;
+      padding: 0.8rem;
+      text-align: center;
+    }
+
+    .process-table td {
+      padding: 0.8rem;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    .process-table td:first-child {
+      text-align: left;
+    }
+
+    .note {
+      background: #666;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .total-time {
+      font-weight: bold;
+      text-align: right;
+      padding: 0.5rem;
+      background: #f0f0f0;
+      border-top: 2px solid #001f2b;
+    }
+
+    /* === GO BACK BUTTON === */
+    .go-back {
+      display: flex;
+      justify-content: center;
+      margin: 2.5rem auto;
+      max-width: 1200px;
+    }
+
+    .go-back-btn {
+      background: white;
+      color: #001f2b;
+      padding: 0.8rem 2rem;
+      border-radius: 32px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .go-back-btn:hover {
+      background: #ff9d00;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(255,157,0,0.3);
+      border-color: #ff9d00;
+    }
+
+    .go-back-btn::before {
+      content: '←';
+      font-size: 1.3rem;
+    }
+
+    /* === BACK TO TOP BUTTON === */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 52px;
+      height: 52px;
+      background: #ff9d00;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #e08a00;
+      transform: translateY(-4px) scale(1.08);
+    }
+
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2.2rem;
+      background: #001f2b;
+      color: white;
+    }
+
+    footer a {
+      color: #ff9d00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.15rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header .logo-container {
+        gap: 0.6rem;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header .title {
+        font-size: 1.1rem;
+      }
+
+      .header .title span {
+        font-size: 1.5rem;
+      }
+
+      .header nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+      }
+
+      .sub-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .breadcrumb {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        margin: 1.8rem auto 1.2rem;
+      }
+
+      .content-section {
+        padding: 2rem 1.5rem;
+        margin: 1.5rem auto;
+      }
+
+      .content-section h2 {
+        font-size: 2rem;
+      }
+
+      .intro-text {
+        font-size: 1.05rem;
+      }
+
+      .info-table,
+      .process-table {
+        font-size: 0.95rem;
+      }
+
+      .checklist-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .go-back-btn {
+        padding: 0.7rem 1.8rem;
+        font-size: 1.1rem;
+      }
+
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+    }
+    /* === ACTIVE PROGRAM CARD (when viewing this page) === */
+    .program-card-link.active .program-card {
+      border: 3px solid #ff9d00;
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <a href="../try.html">
+        <img src="../sources/ocupa-system-logo 3.png" alt="OCUPA Logo" class="logo" />
+      </a>
+      <div class="title">
+        Office of the City<br /><span>Urban Poor Affairs</span>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../try.html">Home</a></li>
+        <li><a href="../try.html#projects-section">Projects</a></li>
+        <li><a href="../try.html#contact-section">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sub Navigation -->
+  <nav class="sub-nav">
+    <a href="../about.html">ABOUT</a>
+    <a href="../programs.html" class="active">PROGRAMS</a>
+    <a href="../hoaccd.html">HOACDD</a>
+    <a href="../rules.html">RULES & POLICIES</a>
+    
+  </nav>
+
+ <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="../programs.html">Programs</a>
+    <span>\</span>
+    <a href="#" class="active">Direct Sale Program for the Informal Settler Families (ISF) and Urban Poor Association</a>
+  </div>
+
+  <!-- Content Section -->
+  <section class="content-section">
+    <h2>Direct Sale Program for the Informal Settler Families (ISF) and Urban Poor Association</h2>
+
+    <div class="intro-text">
+      The City Government of Lucena formally acquired the parcels of land from landowner. Residents in the areas will be able to own land where they have lived for decades. The acquired lots will be awarded to the residents through a Direct Sale Program under the scheme, the City Government of Lucena will buy the property from the landowner then the beneficiaries will then secure their individual title after payment of their respective lots to the city government. The fund will be depending on the availability of local funds.
+    </div>
+
+    <table class="info-table">
+      <tr>
+        <th>Office or Division:</th>
+        <td>Organization Services Division/Office of the City Urban Poor Affairs</td>
+      </tr>
+      <tr>
+        <th>Classification:</th>
+        <td>Highly Technical</td>
+      </tr>
+      <tr>
+        <th>Type of Transaction:</th>
+        <td>
+          G2C - Government to Citizen<br>
+          G2B - Government to Business Entity/ies<br>
+          G2G - Government to Government
+        </td>
+      </tr>
+      <tr>
+        <th>Who may avail:</th>
+        <td>Informal Settler Families (on-sites) and landowner of private property</td>
+      </tr>
+    </table>
+
+    <div class="checklist-header">
+      <span>CHECKLIST OF REQUIREMENTS</span>
+      <span>WHERE TO SECURE</span>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">1. Request letter to the Local Chief Executive/City Mayor (original and photocopy)</div>
+      <div class="where">HOA</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">2. DHSUD Registration (original/photocopy)</div>
+      <div class="where">HOA; DHSUD</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">3. Master list of members & duly signed by the President (original)</div>
+      <div class="where">HOA</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">4. Letter or Intent to Sell to the City Mayor (original & photocopy)</div>
+      <div class="where">Landowner</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">5. Transfer Certificate of Title (CTC & photocopies)</div>
+      <div class="where">HOA; Landowner; Registry of Deeds (RD)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">6. Tax Declaration (CTC & photocopies)</div>
+      <div class="where">HOA; Landowner; City Assessor’s Office (CAO)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">7. Updated Tax clearance/Tax Receipt (original/photocopies)</div>
+      <div class="where">HOA; Landowner; City Treasurer’s Office (CTO)</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">8. Subdivision plan and vicinity map (blue print)</div>
+      <div class="where">HOA; Landowner; Geodetic Engineer</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">9. Notarized Special Power of Attorney (SPA) for landowner/s who are represented by their Attorney-in-Fact (original/photocopies)</div>
+      <div class="where">Landowner</div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="step">10. 2 valid Government IDs (original/photocopies)</div>
+      <div class="where">Landowner</div>
+    </div>
+
+    <table class="process-table">
+      <thead>
+        <tr>
+          <th>CLIENT STEPS</th>
+          <th>AGENCY ACTION</th>
+          <th>FEES TO BE PAID</th>
+          <th>PROCESSING TIME</th>
+          <th>PERSON RESPONSIBLE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1. Sign in the the Client Log Book in the Office front desk</td>
+          <td>1. Assist the client</td>
+          <td>None</td>
+          <td>5 sec</td>
+          <td>Officer of the Day</td>
+        </tr>
+        <tr>
+          <td>2. a Submit request letter in order to assist the ISFs addressed to the City Mayor at the City Mayor’s Office.<br><br>Provide a photocopy of receiving copy to the OCUPA</td>
+          <td>2. Receive the transmitted request letter and intent to sell and required documents<br><br>Transmit to Organization Services Division for review<br><br>Discuss to the City Department Head for review, evaluate, and validate submitted documents<br><br>Discuss with the Local Chief Executive (LCE)/City Mayor for approval</td>
+          <td>None</td>
+          <td>5 min.<br>5 min.<br>15 min.</td>
+          <td>Almalyn Bacus (Job-Order Contractual)<br><br>Ma. Digna Bacia Job Order Contractual<br><br>Organization Services Division<br><br>Ma. Digna Bacia Job Order Contractual<br>Organization Services Division<br><br>Miled G. Ibias (City Department Head II)<br><br>Ma. Digna Bacia Job Order Contractual<br><br>Organization Services Division</td>
+        </tr>
+        <tr>
+          <td>2. b The landowner/HOA should know the actions to be undertaken in response to his\\her letter request and intent to sell</td>
+          <td>2. The OCUPA will undertake the following:<br><br>Conduct site inspection and prepare recommendation.<br><br>Prepare request for the property’s appraisal report from the City Appraisal Committee<br><br>Make a recommendation for the City Mayor’s approval.<br><br>Make a recommendation for an endorsement to the City Legal for the City Mayor to purchase the property.<br><br>Once the Resolution approved and issued, prepare a request to the City Legal for the review of Deed of Absolute Sale</td>
+          <td>None</td>
+          <td>1 day<br>5 min.<br>25 min.<br>5 min.</td>
+          <td>Miled G. Ibias City Department Head II<br>Engr. Cesar Gaela Engineer IV<br>Jaymark Pilar Job Order Contractual<br>Technical Services Division<br>Miled G. Ibias City Department Head II<br>Miled G. Ibias City Department Head II<br>Miled G. Ibias City Department Head II</td>
+        </tr>
+        <tr>
+          <td>3. Coordinate with the OCUPA for the details of purchase and other concerns<br><br>Sign Deed of Absolute Sale (DOAS)</td>
+          <td>3. Prepare the necessary documents for the purchase of the property</td>
+          <td></td>
+          <td>4 hours<br>1 hour</td>
+          <td>Miled G. Ibias City Department Head II<br>Jaymark Pilar Job Order Contractual<br>Technical Services Division<br>Miled G. Ibias City Department Head II</td>
+        </tr>
+        <tr>
+          <td>4. Receive payment from City Treasurer’s Office (upon notification)</td>
+          <td>4. Prepare the payment for the purchase of the property<br><br>Prepare necessary documents and apply for a Certificate of Authorizing Registration (CAR) at Bureau of Internal Revenue (BIR)<br><br>Prepare necessary documents and apply for the transfer of the registered name of the title to the City Government of Lucena at the Registry of Deeds<br><br>Prepare necessary documents and apply for the necessary permits such as Reclassification, Preliminary Approval and Locational Clearance (PALC) and for the approval of technical description at Land Registration Authority (LRA)</td>
+          <td>Depends on the agreement between the LGU and landowner</td>
+          <td>4 hours<br>1 day<br>1 day</td>
+          <td>Miled G. Ibias City Department Head II<br>Mary Grace Laguerta Job Order Contractual<br>Administrative Services Division<br>Jaymark Pilar Job Order Contractual<br>Technical Services Division<br>Miled G. Ibias City Department Head II<br>Engr. Cesar Gaela Engineer IV<br>Jaymark Pilar Job Order Contractual<br>Technical Services Division<br>Miled G. Ibias City Department Head II</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      Note: Proceed to the Beneficiaries Accounts Services and Management - Amortization Payment & Other Payments
+    </div>
+
+    <div class="total-time">
+      TOTAL TIME: 5 days, 2 hours, 35 minutes, 5 seconds<br>
+      The processing of documents will depend on the procedure of the concerned offices or agencies
+    </div>
+  </section>
+
+  <!-- Go Back Button -->
+  <div class="go-back">
+    <a href="../programs.html" class="go-back-btn active">Go back</a>
+  </div>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Footer -->
+  <footer>
+    <p><a href="../try.html">← Back to Home</a></p>
+  </footer>
+
+  <!-- Back to Top JS -->
+  <script>
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
